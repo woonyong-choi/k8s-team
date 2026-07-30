@@ -1,67 +1,129 @@
-# Opsia
+# Kubernetes 장애 증거 기반 GitOps 변경 제안 도구
 
-Opsia는 Kubernetes 장애 증거를 보존하고 제한된 변경안을 GitOps Draft PR로 제안한 뒤 배포 결과를 다시 검증하는 운영 제어면입니다.
+Kubernetes 장애 당시의 증거를 보존하고, 규칙으로 원인을 판정한 뒤 허용된 manifest 변경만 GitHub Draft PR로 제안하고 배포 이후 상태를 다시 검증한다.
 
 ## 해결하는 문제
 
-장애 대응에서 관측 시점의 상태, 원인 판단, 실제 변경, 배포 후 결과가 서로 다른 도구와 대화에 흩어지면 재현과 리뷰가 어렵습니다. Opsia는 이 네 단계를 하나의 상관관계 ID와 불변 근거로 연결합니다.
+Kubernetes 장애 대응에서는 관측 시점의 상태, 원인 판단, 실제 변경과 배포 결과가 서로 다른 도구에 흩어지기 쉽다. 이 프로젝트는 네 단계를 하나의 Correlation ID로 연결하고, 자동화가 클러스터를 직접 변경하지 못하도록 권한을 분리한다.
 
-## Golden Path
+현재 완결한 범위는 다음 한 경로다.
 
-1. 읽기 전용 cluster agent가 Pod와 Event 증거를 제한된 범위로 수집합니다.
-2. 규칙 엔진이 증거 내용과 ImagePullBackOff 후보를 결정론적으로 대조합니다.
-3. 허용된 scalar 변경만 현재 GitOps manifest와 base SHA에 고정합니다.
-4. GitHub에 자동 병합되지 않는 Draft PR을 생성합니다.
-5. 병합·배포 이벤트 뒤 같은 대상을 다시 관측하고 회복 또는 검증 실패를 기록합니다.
+```text
+ImagePullBackOff
+→ Pod·Event 증거 수집
+→ wrong_image_tag 규칙 판정
+→ image tag scalar 변경안
+→ base SHA가 고정된 GitHub Draft PR
+→ 배포 후 새 증거와 변경 전 기준선 비교
+```
 
-완결된 대표 흐름은 `ImagePullBackOff → wrong_image_tag → image_tag_fix Draft PR → 재수집 검증`입니다.
+## 주요 기능
 
-## 안전 모델
+- 읽기 전용 Kubernetes agent의 Pod·Event 증거 수집
+- 동일 사건의 중복 처리와 중복 PR 생성을 막는 멱등성 계약
+- versioned YAML rule 기반의 결정론적 원인 판정
+- Deployment와 허용된 scalar field만 수정하는 patch allowlist
+- PR 생성 직전 base SHA 재확인
+- Draft PR 강제와 자동 merge·클러스터 직접 변경 차단
+- 배포 이후 새 evidence window와 변경 전 기준선 비교
+- 실패 단계, reason code, 원본 evidence reference 보존
 
-- agent RBAC은 읽기 전용이며 `pods/exec`, `nodes/proxy`, `patch` 권한이 없습니다.
-- 제어면은 클러스터 명령을 직접 실행하지 않습니다.
-- 수정안은 정확한 repository, manifest path, base SHA, source digest에 고정됩니다.
-- Secret 보정이나 외부 registry 장애처럼 자동 결정할 수 없는 원인은 운영자 검토로 종료합니다.
-- PR은 Draft로 생성되며 자동 merge, 자동 rollback, 범용 CD orchestration을 제공하지 않습니다.
+## 설계에서 제외한 범위
 
-## 5분 빠른 확인
+- 모든 Kubernetes 장애 자동 복구
+- LLM의 자유로운 YAML 수정
+- 클러스터 명령 직접 실행
+- 자동 merge와 자동 rollback
+- 범용 채팅, 웹 터미널, 비용·트래픽 대시보드
+- node collector와 광범위한 CD orchestration
 
-요구 사항은 Python 3.13, [uv](https://docs.astral.sh/uv/), Node.js 22, Helm입니다.
+기능 수보다 한 경로의 권한·실패·검증 조건을 끝까지 설명하는 것을 우선했다.
+
+## 설치
+
+요구 사항:
+
+- Python 3.13
+- [uv](https://docs.astral.sh/uv/)
+- Node.js 22
+- Helm
 
 ```bash
+git clone https://github.com/woonyong-kr/k8s-ops.git
+cd k8s-ops
 uv sync --all-groups
-cd frontend && npm ci && cd ..
-make demo
-make gate
+cd frontend
+npm ci
+cd ..
 ```
 
-`make demo`는 외부 클러스터나 GitHub를 변경하지 않고 Golden Path의 계약 테스트를 실행합니다. 실제 설치 manifest는 `make manifest-check`로 검증합니다.
+Docker, kubectl과 kind는 이미지·manifest·로컬 클러스터 검증을 수행할 때만 필요하다.
 
-## 테스트
+## 사용법
+
+외부 Kubernetes 클러스터나 GitHub 저장소를 변경하지 않고 대표 흐름의 계약을 확인한다.
 
 ```bash
-make test                         # Ruff, compileall, backend pytest
-make gate-frontend                # lint, typecheck, frontend tests, production build
-make manifest-check               # Helm lint/template, RBAC·manifest 검사
-make product-brand-boundary-check # 과거 제품명과 개인 배포 경계 검사
+make demo
 ```
 
-## 아키텍처
+전체 저장소를 검증한다.
 
-```mermaid
-flowchart LR
-  A["Read-only cluster agent"] --> B["Evidence + incident"]
-  B --> C["Deterministic RCA"]
-  C --> D["Bounded patch + pinned base SHA"]
-  D --> E["GitHub Draft PR"]
-  E --> F["Post-deploy evidence verification"]
+```bash
+make test
+make gate-frontend
+make manifest-check
+make event-bus-equivalence
+make build-image
 ```
 
-기본 runtime은 15개 제어면 서비스와 1개 read-only cluster agent로 구성됩니다. 브라우저 표면은 사건 목록과 사건 상세의 3개 route만 제공합니다. 자세한 구성은 [Project Map](docs/PROJECT-MAP.md), 이벤트 흐름은 [Golden Path](docs/GOLDEN-PATH.md), 삭제·격리 판단은 [Cleanup Matrix](docs/CLEANUP-MATRIX.md)를 참고하세요.
+로컬 도구 상태는 다음 명령으로 확인한다.
+
+```bash
+make doctor
+```
+
+## 코드로 따라가기
+
+| 단계 | 구현 | 대표 검증 |
+|---|---|---|
+| Correlation ID 생성·전파 | [`envelope.py`](src/packages/events/envelope.py), [`dispatch.py`](src/packages/runtime/dispatch.py) | [`test_golden_path_safety_contracts.py`](tests/test_golden_path_safety_contracts.py) |
+| 증거 수집 | [`collector.py`](src/services/target/cluster-agent/evidence/collector.py), Kubernetes providers | evidence scope·read-only contract tests |
+| incident와 중복 억제 | [`models.py`](src/domains/rca/models.py), [`incident-worker`](src/services/ai/incident-worker/app.py) | incident identity tests |
+| 결정론적 RCA | [`causes.py`](src/services/ai/agent/pipeline/causes.py), rule catalog | ImagePullBackOff/RCA tests |
+| patch allowlist | [`source_patch.py`](src/domains/gitops/source_patch.py) | merge scope·Kustomize source tests |
+| Draft PR | [`github_provider.py`](src/services/gitops/scm-worker/github_provider.py) | base advance·Draft enforcement tests |
+| 사후 검증 | [`recovery_verification.py`](src/domains/rca/recovery_verification.py), [`rca-feedback-worker`](src/services/ai/rca-feedback-worker/app.py) | stale window·baseline·recovery tests |
+
+구현 순서와 실패 조건을 코드 단위로 설명한 문서는 [학습 아카이브](docs/LEARNING-ARCHIVE.md)를 참고한다. 전체 이벤트 계약과 안전장치는 [Golden Path](docs/GOLDEN-PATH.md), 현재 실행 구조는 [Project Map](docs/PROJECT-MAP.md)에 정리했다.
+
+## 검증 결과
+
+정리 완료 커밋 기준으로 다음 검증을 통과했다.
+
+- Backend: `236 passed, 1 skipped`
+- ImagePullBackOff/RCA: `43 passed`
+- base-SHA-pinned Draft PR: `29 passed`
+- post-deploy verification: `27 passed`
+- Frontend typecheck, ESLint, Vitest와 production build
+- Helm lint/template와 read-only RBAC 검사
+- in-process/NATS 이벤트 의미 동등성
+- Docker image build
+- Alembic single head와 baseline 검증
+
+이 수치는 운영 성능이나 실사용 성과가 아니다. 구현한 계약이 로컬 테스트·빌드·manifest 수준에서 일치함을 뜻한다.
+
+## 프로젝트에서 맡은 범위
+
+5인 팀의 팀장으로 전체 아키텍처, 장애 처리 파이프라인과 서비스 간 인터페이스를 설계했다. 프로젝트 종료 후 포트폴리오 정리 단계에서 기능 표면을 한 Golden Path로 축소하고, 직접 변경·자동 merge를 차단하는 안전 계약과 코드·테스트 근거를 다시 감사했다.
+
+팀 프로젝트이므로 저장소 전체 코드를 개인 구현으로 주장하지 않는다. 면접과 포트폴리오에서는 직접 설계하고 코드로 추적할 수 있는 파이프라인·인터페이스·권한 경계를 설명한다.
 
 ## 현재 한계
 
-- GitHub만 Draft PR provider로 지원합니다.
-- 대표 완료 시나리오는 ImagePullBackOff이며 다른 Kubernetes 원인 규칙은 동일한 증거 품질을 보장하지 않습니다.
-- 로컬 검증은 계약·빌드·manifest 수준입니다. 실제 cluster와 GitHub App을 잇는 end-to-end 검증은 배포 환경에서 별도로 수행해야 합니다.
-- 과거 command와 dashboard DB 모델 일부는 migration·과거 행 조회 호환을 위해 비실행 상태로 남아 있습니다.
+- 실제 사용자와 운영 트래픽이 없는 데모 프로젝트다.
+- 실제 Kubernetes 클러스터와 GitHub App을 연결한 외부 E2E는 수행하지 않았다.
+- 대표 완료 시나리오는 ImagePullBackOff 하나다.
+- GitHub 외 SCM provider는 지원하지 않는다.
+- migration 호환을 위한 과거 ORM·event model 일부가 비실행 상태로 남아 있다.
+- 성능·장애 복구 시간·비용 절감 수치는 측정하지 않았다.

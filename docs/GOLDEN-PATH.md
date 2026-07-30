@@ -1,6 +1,6 @@
 # Golden Path
 
-Opsia는 Kubernetes 장애 증거를 보존하고 제한된 변경안을 GitOps Draft PR로 제안한 뒤 배포 결과를 다시 검증하는 운영 제어면입니다.
+이 도구는 Kubernetes 장애 증거를 보존하고 제한된 변경안을 GitOps Draft PR로 제안한 뒤 배포 결과를 다시 검증합니다.
 
 ## ImagePullBackOff 완결 흐름
 
@@ -21,7 +21,7 @@ Opsia는 Kubernetes 장애 증거를 보존하고 제한된 변경안을 GitOps 
 - RCA는 LLM 출력이 아니라 versioned YAML rule과 정확한 signal match로 결정합니다.
 - patch는 repository, branch, manifest path, base SHA, source SHA-256을 모두 가져야 합니다.
 - PR 생성 전에 원본 scalar가 예상값과 같은지 다시 확인합니다.
-- merge는 제품 권한 밖입니다. Opsia는 Draft PR을 만들고 lifecycle event만 관측합니다.
+- merge는 도구의 권한 밖입니다. Draft PR을 만들고 lifecycle event만 관측합니다.
 - 검증은 변경 전 evidence와 변경 후 evidence를 같은 대상 identity로 비교합니다.
 
 ## 주요 이벤트
