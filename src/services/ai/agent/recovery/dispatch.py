@@ -632,7 +632,7 @@ def recovery_safe_pr_body(
         "",
         "---",
         "",
-        "> Opsia 복구 파이프라인에서 생성된 PR입니다. 적용 전 변경 내용과 검증 계획을 확인해 주세요.",
+        "> Kubernetes 장애 복구 파이프라인에서 생성된 PR입니다. 적용 전 변경 내용과 검증 계획을 확인해 주세요.",
     ]
     return "\n".join(sections).strip()
 
@@ -1144,7 +1144,7 @@ def fallback_recovery_patch(selected: RecoveryActionCandidate) -> SafePrFilePatc
             "## 참고 제안값\n\n"
             f"- CPU request: `{RESOURCE_REQUEST_MIN_CPU}`\n"
             f"- Memory request: `{RESOURCE_REQUEST_MIN_MEMORY}`\n\n"
-            "이 값은 Opsia Safe PR v1의 최소 참고값이며 자동 적용값이 아닙니다. "
+            "이 값은 Kubernetes Safe PR v1의 최소 참고값이며 자동 적용값이 아닙니다. "
             "운영자는 실제 workload 부하, namespace quota, node capacity를 확인한 뒤 "
             "manifest에 적절한 값을 직접 반영해야 합니다.\n"
         )

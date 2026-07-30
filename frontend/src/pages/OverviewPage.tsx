@@ -39,7 +39,7 @@ export function OverviewPage({ route }: { route: AppRoute }) {
       <section className="state-panel">
         <span className="eyebrow">404</span>
         <h1>Golden Path 밖의 화면입니다.</h1>
-        <p>Opsia는 현재 ImagePullBackOff의 증거 → RCA → Draft PR → 검증 흐름에 집중합니다.</p>
+        <p>현재 ImagePullBackOff의 증거 → RCA → Draft PR → 검증 흐름에 집중합니다.</p>
         <a className="button" href="/">Golden Path 보기</a>
       </section>
     );
@@ -52,8 +52,8 @@ export function OverviewPage({ route }: { route: AppRoute }) {
           <span className="eyebrow">KUBERNETES RECOVERY, WITH RECEIPTS</span>
           <h1>장애를 고치는 것보다<br />고친 근거를 남깁니다.</h1>
           <p>
-            Opsia는 Kubernetes 장애 증거를 보존하고 제한된 변경안을 GitOps Draft PR로
-            제안한 뒤 배포 결과를 다시 검증하는 운영 제어면입니다.
+            Kubernetes 장애 증거를 보존하고 제한된 변경안을 GitOps Draft PR로
+            제안한 뒤 배포 결과를 다시 검증합니다.
           </p>
           <div className="hero-actions">
             <a className="button" href="/incidents">실제 RCA 보기</a>
@@ -114,7 +114,7 @@ export function OverviewPage({ route }: { route: AppRoute }) {
           <article>
             <span>03</span>
             <h3>Human + GitOps</h3>
-            <p>Opsia는 Draft PR까지만 만듭니다. 병합과 실제 배포는 사람과 외부 reconciler의 권한입니다.</p>
+            <p>이 도구는 Draft PR까지만 만듭니다. 병합과 실제 배포는 사람과 외부 reconciler의 권한입니다.</p>
           </article>
           <article>
             <span>04</span>

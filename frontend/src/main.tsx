@@ -4,7 +4,7 @@ import { App } from "./App";
 import "./styles.css";
 
 const container = document.getElementById("root");
-if (!container) throw new Error("Opsia root container is missing.");
+if (!container) throw new Error("Kubernetes GitOps root container is missing.");
 
 createRoot(container).render(
   <StrictMode>
