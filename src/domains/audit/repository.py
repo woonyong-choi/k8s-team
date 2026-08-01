@@ -164,17 +164,3 @@ class AuditLogRepository(DatabaseConnection):
         statement = audit_correlation_clusters_statement(workspace_id, correlation_id)
         with self.connection() as conn:
             return list(conn.execute(statement).scalars().all())
-
-    def delete_audit_logs_older_than(self, cutoff: datetime, *, limit: int = 1000) -> int:
-        """감사 로그를 보존 기간 이후 배치 삭제한다."""
-        table = AuditLog.__table__
-        expired = (
-            select(table.c.id)
-            .where(table.c.created_at < cutoff)
-            .order_by(table.c.id)
-            .limit(limit)
-            .cte("expired_audit_log")
-        )
-        statement = table.delete().where(table.c.id.in_(select(expired.c.id))).returning(table.c.id)
-        with self.connection() as conn:
-            return len(conn.execute(statement).all())
