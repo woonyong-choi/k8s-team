@@ -25,7 +25,6 @@ from domains.gitops.models import (
     WorkflowRunStep,
     WorkspaceCredential,
 )
-from domains.gitops.overview_repository import GitOpsOverviewRepository
 from domains.gitops.repository_discovery import (
     RepositoryDiscoveryError,
     normalize_github_repo_ref,
@@ -63,7 +62,7 @@ from packages.contracts.identity import (
     Permission,
     ResourceRole,
 )
-from packages.storage.engine import iso_or_none, row_dict
+from packages.storage.engine import DatabaseConnection, iso_or_none, row_dict
 
 LOGGER = get_logger(__name__)
 GITHUB_REPOSITORY_CREDENTIAL_SCOPE_PREFIX = "repository"
@@ -280,7 +279,7 @@ def prepare_approved_resource_snapshots(
     return len(command_rows), prepared
 
 
-class RepoChangeRepository(GitOpsOverviewRepository):
+class RepoChangeRepository(DatabaseConnection):
     def lock_repository_identity(self, workspace_id: str, repo_ref: str) -> None:
         lock_key = repository_identity_lock_key(workspace_id, repo_ref)
         with self.connection() as conn:
