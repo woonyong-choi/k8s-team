@@ -175,8 +175,6 @@ async def on_safe_pr_ready_for_creation(
         fail=lambda exc: provider_failure_body(request, exc),
     ):
         yield out
-        if isinstance(out, SafePrCreatedBody) and request.next_alert is not None:
-            yield request.next_alert
 
 
 if __name__ == "__main__":

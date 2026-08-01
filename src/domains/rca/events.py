@@ -735,7 +735,6 @@ class SafePrPatchPreparedBody(EventBody):
     pr_kind: str = "safe_pr_patch"
     approval_ref: str | None = None
     policy_decision_ref: str | None = None
-    next_alert: JsonObject | None = None
 
 
 @event(EventSubject.DIFF_EXPLAINED)

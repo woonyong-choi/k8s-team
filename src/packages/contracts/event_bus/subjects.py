@@ -78,9 +78,6 @@ class EventSubject(StrEnum):
     ROLLOUT_DIAGNOSED = "rollout.diagnosed"  # 롤아웃 상태 진단
     APPROVAL_RECOMMENDED = "approval.recommended"  # 승인/거절 보조 판단
     RCA_ACTION_REQUIRED = "rca.action_required"  # 자동 진행 불가, 사람 조치 필요
-    ALERT_REQUESTED = "alert.requested"  # 알람 전송/사전 배포 게이트 요청
-    ALERT_DISPATCHED = "alert.dispatched"  # 알람 전송 완료(log/webhook provider)
-    ALERT_REJECTED = "alert.rejected"  # 알람/정책 게이트 차단
     SAFE_PR_REQUESTED = "safe_pr.requested"  # PR 생성 요청(공통)
     SAFE_PR_CREATED = "safe_pr.created"  # repo-gateway 가 PR 생성 완료
     SAFE_PR_FAILED = "safe_pr.failed"  # repo-gateway 가 PR 생성 실패

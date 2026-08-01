@@ -92,5 +92,4 @@ def patch_prepared_body(request: SafePrRequestedBody) -> SafePrPatchPreparedBody
         pr_kind=request.pr_kind,
         approval_ref=request.approval_ref,
         policy_decision_ref=request.policy_decision_ref,
-        next_alert=request.next_alert.to_body() if request.next_alert is not None else None,
     )

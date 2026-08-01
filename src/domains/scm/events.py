@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from domains.alert.events import AlertRequestedBody
 from packages.contracts.event_bus.bodies.base import EventBody
 from packages.contracts.event_bus.registry import event
 from packages.contracts.event_bus.subjects import EventSubject
@@ -60,7 +59,6 @@ class SafePrRequestedBody(EventBody):
     patch_sha256: str = ""
     approval_ref: str | None = None
     policy_decision_ref: str | None = None
-    next_alert: AlertRequestedBody | None = None
     evidence_ref: str = ""
     # Safe PR은 제안 경계다. base branch 쓰기나 다른 전달 모드는 허용하지 않는다.
     delivery: str = SAFE_PR_DELIVERY_PULL_REQUEST
