@@ -628,27 +628,6 @@ class ApprovalDecisionRequest(StrictModel):
     reason: str | None = None
 
 
-class AlertChannelUpsertRequest(StrictModel):
-    """알림 채널 생성/수정 — min_severity 이상의 알림만 이 채널로 발송된다."""
-
-    channel_id: str = ""  # 빈 값이면 서버가 생성(신규)
-    name: str = Field(min_length=1)
-    kind: Literal["webhook"] = "webhook"
-    url: str = Field(min_length=1, max_length=2000)
-    min_severity: Literal["info", "warning", "critical"] = "warning"
-    enabled: bool = True
-
-
-class AlertChannelTestRequest(StrictModel):
-    channel_id: str = ""
-    name: str = Field(default="test", min_length=1, max_length=120)
-    kind: Literal["webhook"] = "webhook"
-    url: str = Field(min_length=1, max_length=2000)
-    min_severity: Literal["info", "warning", "critical"] = "warning"
-    severity: Literal["info", "warning", "critical"] = "warning"
-    message: str = Field(default="알림 채널 테스트", max_length=500)
-
-
 class RcaRuleValidateRequest(StrictModel):
     yaml_text: str = Field(min_length=1, max_length=100_000)
 

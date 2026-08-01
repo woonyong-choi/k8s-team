@@ -2536,39 +2536,10 @@ class ClusterUnregisterResponse(StrictModel):
     failure_reason: str | None = None
 
 
-class AlertChannelResponse(StrictModel):
-    channel_id: str
-    workspace_id: str
-    name: str
-    kind: str
-    url: str
-    min_severity: str
-    enabled: bool
-    last_tested_at: str | None = None
-    last_test_status: str | None = None
-    last_test_detail: str | None = None
-    last_test_status_code: int | None = None
-    created_at: str | None = None
-    updated_at: str | None = None
-
-
-class AlertChannelListResponse(StrictModel):
-    channels: list[AlertChannelResponse] = Field(default_factory=list)
-
-
 class ValidationErrorItem(StrictModel):
     code: str
     detail: str
     line: int | None = None
-
-
-class AlertChannelTestResponse(StrictModel):
-    valid: bool
-    delivered: bool = False
-    code: str | None = None
-    detail: str = ""
-    status_code: int | None = None
-    channel: AlertChannelResponse | None = None
 
 
 class RcaRuleValidateResponse(StrictModel):
