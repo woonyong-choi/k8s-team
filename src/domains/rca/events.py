@@ -750,17 +750,6 @@ class DiffExplainedBody(EventBody):
     reason: str = ""
 
 
-@event(EventSubject.ROLLOUT_DIAGNOSED)
-@dataclass(frozen=True)
-class RolloutDiagnosedBody(EventBody):
-    """rollout.diagnosed — 롤아웃 상태 진단."""
-
-    diagnosis: str
-    next_action: str
-    details: JsonObject
-    workspace_id: str = DEFAULT_WORKSPACE_ID
-
-
 @event(EventSubject.APPROVAL_RECOMMENDED)
 @dataclass(frozen=True)
 class ApprovalRecommendedBody(EventBody):

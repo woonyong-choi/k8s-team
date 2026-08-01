@@ -75,7 +75,6 @@ class EventSubject(StrEnum):
     SAFE_PR_PATCH_PREPARED = "safe_pr.patch_prepared"  # Safe PR 패치 초안 준비
     DIFF_EXPLAINED = "diff.explained"  # 패치 diff 와 위험 설명
     SAFE_PR_READY_FOR_CREATION = "safe_pr.ready_for_creation"  # 검증된 Safe PR 생성 요청
-    ROLLOUT_DIAGNOSED = "rollout.diagnosed"  # 롤아웃 상태 진단
     APPROVAL_RECOMMENDED = "approval.recommended"  # 승인/거절 보조 판단
     RCA_ACTION_REQUIRED = "rca.action_required"  # 자동 진행 불가, 사람 조치 필요
     SAFE_PR_REQUESTED = "safe_pr.requested"  # PR 생성 요청(공통)
