@@ -6,7 +6,7 @@ app.state.db/events 를 세팅하고, 각 도메인 router 는 이 provider 만 
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from fastapi import Request
 
@@ -21,13 +21,3 @@ def get_db(request: Request) -> Database:
 
 def get_events(request: Request) -> ApiEventGateway:
     return request.app.state.events
-
-
-def get_timeline_fanout(request: Request) -> Any:
-    """Return the app-owned Timeline wake-up provider without a package→domain edge.
-
-    The concrete fan-out belongs to ``domains.timeline``; this generic runtime
-    dependency only retrieves the object the gateway placed in app state.
-    Domain routers validate the protocol they require at their own boundary.
-    """
-    return request.app.state.timeline_fanout
