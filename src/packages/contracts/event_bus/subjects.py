@@ -93,29 +93,11 @@ class EventSubject(StrEnum):
     ALERT_REQUESTED = "alert.requested"  # 알람 전송/사전 배포 게이트 요청
     ALERT_DISPATCHED = "alert.dispatched"  # 알람 전송 완료(log/webhook provider)
     ALERT_REJECTED = "alert.rejected"  # 알람/정책 게이트 차단
-    EMAIL_VERIFICATION_REQUESTED = "mail.email_verification.requested"  # 이메일 인증 요청
-    EMAIL_VERIFICATION_SENT = "mail.email_verification.sent"  # 이메일 인증 발송 완료
-    EMAIL_VERIFICATION_FAILED = "mail.email_verification.failed"  # 이메일 인증 발송 실패
     SAFE_PR_REQUESTED = "safe_pr.requested"  # PR 생성 요청(공통)
     SAFE_PR_CREATED = "safe_pr.created"  # repo-gateway 가 PR 생성 완료
     SAFE_PR_FAILED = "safe_pr.failed"  # repo-gateway 가 PR 생성 실패
 
-    # --- AI conversation API: HTTP 대화 요청 -> agent worker -> 응답 이벤트 ---
-    AI_MESSAGE_RECEIVED = "ai.message.received"  # 사용자 메시지 수신
-    AI_MESSAGE_RESPONDED = "ai.message.responded"  # agent 응답 생성
-    AI_MESSAGE_FAILED = "ai.message.failed"  # agent 응답 실패
-
-    # --- 사용자별 웹 셸 상태 ---
-    NAMESPACE_SCOPE_UPDATED = "namespace.scope.updated"
-    UI_PREFERENCES_UPDATED = "ui.preferences.updated"
     CHECKS_SETTINGS_UPDATED = "checks.settings.updated"
-
-    # --- Workspace/cluster integration configuration ---
-    PROMETHEUS_INTEGRATION_CONFIGURED = "integration.prometheus.configured"
-
-    # --- Helm workspace configuration ---
-    HELM_CHART_SOURCE_DELETED = "helm.chart_source.deleted"
-    HELM_CHART_SOURCE_REFRESHED = "helm.chart_source.refreshed"
 
     # --- GitOps 제품 상태(workflow-controller): 이벤트 흐름을 사용자 실행 객체로 투영 ---
     WORKFLOW_CREATED = "workflow.created"  # 앱/바인딩/커밋 기준 실행 객체 생성 요청
