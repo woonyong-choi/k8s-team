@@ -41,9 +41,6 @@ class GitHub:
 class Command:
     DEFAULT_ACTION: Final[str] = "rollout_restart"
     APPLY_MANIFEST_ACTION: Final[str] = "apply_manifest"
-    CATALOG_HELM_INSTALL_ACTION: Final[str] = "catalog.helm.install"
-    CATALOG_HELM_INSTALL_CAPABILITY: Final[str] = "catalog_helm_install"
-    CATALOG_HELM_UPGRADE_CAS_CAPABILITY: Final[str] = "catalog_helm_upgrade_cas.v1"
     DELETE_WORKLOAD_ACTION: Final[str] = "delete_workload"
     KUBERNETES_DEPLOYMENT_SCALE_ACTION: Final[str] = "k8s.apps.v1.deployments.scale"
     KUBERNETES_STATEFULSET_SCALE_ACTION: Final[str] = "k8s.apps.v1.statefulsets.scale"

@@ -2033,29 +2033,6 @@ class HomeCustomResourceSummary(StrictModel):
         return self
 
 
-class HomeHelmSummary(StrictModel):
-    coverage: HomeInsightCoverage
-    release_count: int | None = Field(default=None, ge=0)
-    status_counts: dict[str, int] = Field(default_factory=dict, max_length=20)
-
-    @model_validator(mode="after")
-    def release_counts_match_coverage(self) -> Self:
-        if self.coverage.availability == "unavailable":
-            if self.release_count is not None or self.status_counts:
-                raise ValueError("unavailable Helm coverage cannot expose release counts")
-            return self
-        if self.release_count is None:
-            raise ValueError("observed Helm coverage requires a release count")
-        if any(
-            not status.strip() or len(status) > 120 or count < 1
-            for status, count in self.status_counts.items()
-        ):
-            raise ValueError("Helm status counts must be positive and named")
-        if sum(self.status_counts.values()) > self.release_count:
-            raise ValueError("Helm status counts cannot exceed the release count")
-        return self
-
-
 HomeCertificateExpiryStatus = Literal["valid", "expiring", "expired"]
 
 
