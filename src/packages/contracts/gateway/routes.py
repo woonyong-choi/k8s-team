@@ -9,9 +9,6 @@ AUTH_WORKSPACE_SWITCH_PATH = "/auth/workspaces/switch"
 AUTH_LOGIN_PATH = "/auth/login"
 AUTH_LOGOUT_PATH = "/auth/logout"
 AUTH_APPROVE_USER_PATH = "/auth/users/{user_id}/approve"
-PROMETHEUS_INTEGRATION_PATH = "/integrations/prometheus"
-AGENT_PROMETHEUS_INTEGRATION_PATH = "/agent/integrations/prometheus"
-AGENT_PROMETHEUS_INTEGRATION_STATUS_PATH = "/agent/integrations/prometheus/status"
 GITHUB_WEBHOOK_PATH = "/github/webhook"
 GITHUB_APP_CONFIG_PATH = "/integrations/github/app/config"
 GITHUB_APP_INSTALL_URL_PATH = "/integrations/github/app/install-url"
@@ -23,59 +20,19 @@ GITHUB_APP_VERIFY_PATH = "/integrations/github/app/installations/{installation_i
 ALERTMANAGER_WEBHOOK_PATH = "/webhooks/alertmanager"
 AGENT_CONNECT_PATH = "/agent/connect"
 AGENT_EVIDENCE_PATH = "/agent/evidence"
-TARGETS_PATH = "/targets"
 # 원라인 인스톨러 — agent 토큰 자체가 자격증명(해시 대조)이라 세션 불필요.
 INSTALL_MANIFEST_PATH = "/install/{agent_token}"
-INSTALL_TELEMETRY_SCRIPT_PATH = "/install/{agent_token}/telemetry/{platform}"
-INSTALL_TELEMETRY_ASSET_PATH = "/install/{agent_token}/telemetry/assets/{asset_name}"
-TARGET_RBAC_MANIFEST_PATH = "/clusters/{cluster_id}/target-rbac-manifest"
-COMMANDS_PATH = "/commands"
-COMMAND_STATUS_PATH = "/commands/{command_id}"
-COMMAND_EVENTS_PATH = "/commands/{command_id}/events"
-COMMAND_CANCEL_PATH = "/commands/{command_id}/cancel"
-COMMAND_RETRY_PATH = "/commands/{command_id}/retry"
-# 원본 전수 기능 mapping의 생성형 계약 catalog. 제품 UI는 이 경로를 통해
-# 기능·스트리밍 여부를 발견하며, 소스 목록을 다시 하드코딩하지 않는다.
-FEATURE_CONTRACTS_PATH = "/feature-contracts"
-APPROVAL_GRANT_PATH = "/approvals/{approval_id}/grant"
-APPROVAL_REJECT_PATH = "/approvals/{approval_id}/reject"
 DEAD_LETTERS_PATH = "/dead-letters"
 DEAD_LETTER_REPLAY_PATH = "/dead-letters/{dead_letter_id}/replay"
-AI_CONVERSATIONS_PATH = "/ai/conversations"
-AI_CONVERSATION_PATH = "/ai/conversations/{conversation_id}"
-AI_CONVERSATION_MESSAGES_PATH = "/ai/conversations/{conversation_id}/messages"
-# Context-bound AI facade. These routes are intentionally separate from the
-# asynchronous conversation workflow: every synchronous answer must carry
-# materialized, user-authorized evidence.
-AI_CHAT_PATH = "/ai/chat"
-AI_SUGGESTIONS_PATH = "/ai/suggestions"
-AI_RESOURCES_PATH = "/ai/resources/{kind}"
-AI_RESOURCE_PATH = "/ai/resources/{kind}/{namespace}/{name}"
-# Browser log SSE. Multi-cluster identity is a required query parameter; these
-# path constants own only the target identity portion.
-POD_LOG_STREAM_PATH = "/pods/{namespace}/{name}/logs/stream"
-WORKLOAD_LOG_STREAM_PATH = "/workloads/{kind}/{namespace}/{name}/logs/stream"
-# Contextual Workload Detail.  API group/version and exact cluster identity are
-# query-owned because the upstream path is intentionally cluster agnostic.
-WORKLOAD_DETAIL_PATH = "/workloads/{kind}/{namespace}/{name}"
-RIGHTSIZING_SCAN_PATH = "/rightsizing/workloads"
 # 관리 콘솔 — 조직/그룹/멤버/권한 (프론트 콘솔 전용, admin 세션)
 ORGS_PATH = "/orgs"
 ORG_PATH = "/orgs/{org_id}"
 GROUPS_PATH = "/groups"
-GROUP_PATH = "/groups/{group_id}"
 GROUP_MEMBERS_PATH = "/groups/{group_id}/members"
 GROUP_MEMBER_PATH = "/groups/{group_id}/members/{user_id}"
 USERS_PATH = "/users"
 ACCESS_PATH = "/access"
 ACCESS_ITEM_PATH = "/access/{access_id}"
-CLUSTER_HOME_INSIGHTS_PATH = "/clusters/{cluster_id}/home/insights"
-NETWORK_POLICY_EVALUATE_PATH = "/network-policies/evaluate"
-RESOURCE_FILE_COMMAND_PATH = "/resource-files/commands"
-SCHEDULED_WORKLOAD_RUNS_PATH = "/workloads/scheduled/{kind}/{namespace}/{name}/runs"
-SCHEDULED_WORKLOAD_RUN_LOG_STREAM_PATH = (
-    "/workloads/scheduled/{kind}/{namespace}/{name}/runs/{run_key}/logs/stream"
-)
 REPOSITORY_DISCOVERY_PROBE_PATH = "/repositories/discovery/probe"
 REPOSITORY_DISCOVERY_BRANCHES_PATH = "/repositories/discovery/branches"
 REPOSITORY_DISCOVERY_MANIFESTS_PATH = "/repositories/discovery/manifests"
