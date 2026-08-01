@@ -17,7 +17,7 @@ helm template opsia "${ROOT_DIR}/charts/opsia" \
   --set initialAdmin.password=manifest-check \
   > "${RENDERED_MANIFEST}"
 
-python3 - "${RENDERED_MANIFEST}" <<'PY'
+uv run python - "${RENDERED_MANIFEST}" <<'PY'
 from pathlib import Path
 import sys
 

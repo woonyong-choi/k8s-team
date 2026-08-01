@@ -16,6 +16,13 @@ for cmd in git python3 uv docker kubectl kind helm; do
   check "${cmd}" || status=1
 done
 
+if uv run python -c 'import sys; raise SystemExit(sys.version_info < (3, 13))'; then
+  echo "ok   project python >= 3.13"
+else
+  echo "miss project python >= 3.13"
+  status=1
+fi
+
 if docker info >/dev/null 2>&1; then
   echo "ok   docker daemon"
 else
@@ -24,7 +31,7 @@ else
 fi
 
 echo
-python3 --version || true
+uv run python --version || true
 uv --version || true
 docker --version || true
 kubectl version --client=true || true
