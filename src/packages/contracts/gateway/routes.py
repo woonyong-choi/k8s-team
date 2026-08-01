@@ -170,7 +170,6 @@ REFRESH_POLICIES_PATH = "/refresh-policies"
 RESOURCES_GRAPH_PATH = "/resources/graph"
 TOPOLOGY_PATH = "/topology"
 # Resources time scrubber: actual observed changes plus explicit collection gaps.
-CHANGES_PATH = "/changes"
 # Retained, immutable product Timeline history.  Snapshot is NDJSON so a
 # browser/desktop adapter can use the same frame parser as resumable SSE.
 TIMELINE_CAPABILITIES_PATH = "/timeline/capabilities"
@@ -261,7 +260,6 @@ RCA_REPORTS_PATH = "/rca-reports"
 RCA_RULES_PATH = "/rca/rules"
 RCA_RULES_VALIDATE_PATH = "/rca/rules/validate"
 RCA_BUNDLE_PATH = "/rca/bundles/{correlation_id}"
-RCA_RECENT_CHANGES_PATH = "/rca/incidents/{incident_id}/recent-changes"
 RCA_RECOVERY_PLAN_BY_CORRELATION_PATH = "/rca/recovery-plans/by-correlation/{correlation_id}"
 RCA_RECOVERY_ACTION_SELECT_BY_CORRELATION_PATH = (
     "/rca/recovery-plans/by-correlation/{correlation_id}/actions/select"
