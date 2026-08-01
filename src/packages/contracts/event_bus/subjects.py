@@ -33,9 +33,6 @@ class EventSubject(StrEnum):
     # --- 대상 클러스터/에이전트(cluster-agent) ---
     AGENT_CONNECTED = "agent.connected"  # 에이전트 등록
     CLUSTER_EVIDENCE_RECEIVED = "cluster.evidence.received"  # 증거 수신(입구)
-    CLUSTER_INVENTORY_SNAPSHOT_RECORDED = (
-        "cluster.inventory.snapshot.recorded"  # inventory snapshot 저장
-    )
     # --- 명령 처리(command-worker): 정책→디스패치→에이전트 큐 ---
     COMMAND_REQUESTED = "command.requested"  # 명령 요청
     COMMAND_REJECTED = "command.rejected"  # 정책 위반 거부
