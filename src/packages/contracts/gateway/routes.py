@@ -16,15 +16,12 @@ GITHUB_APP_CALLBACK_PATH = "/integrations/github/app/callback"
 GITHUB_APP_MANIFEST_PATH = "/integrations/github/app/manifest"
 GITHUB_APP_MANIFEST_CALLBACK_PATH = "/integrations/github/app/manifest/callback"
 GITHUB_APP_VERIFY_PATH = "/integrations/github/app/installations/{installation_id}/verify"
-# 외부 모니터링(Alertmanager/Grafana) 알림 수신 — 인시던트 파이프라인 트리거.
 ALERTMANAGER_WEBHOOK_PATH = "/webhooks/alertmanager"
 AGENT_CONNECT_PATH = "/agent/connect"
 AGENT_EVIDENCE_PATH = "/agent/evidence"
-# 원라인 인스톨러 — agent 토큰 자체가 자격증명(해시 대조)이라 세션 불필요.
 INSTALL_MANIFEST_PATH = "/install/{agent_token}"
 DEAD_LETTERS_PATH = "/dead-letters"
 DEAD_LETTER_REPLAY_PATH = "/dead-letters/{dead_letter_id}/replay"
-# 관리 콘솔 — 조직/그룹/멤버/권한 (프론트 콘솔 전용, admin 세션)
 ORGS_PATH = "/orgs"
 ORG_PATH = "/orgs/{org_id}"
 GROUPS_PATH = "/groups"
@@ -37,165 +34,9 @@ REPOSITORY_DISCOVERY_PROBE_PATH = "/repositories/discovery/probe"
 REPOSITORY_DISCOVERY_BRANCHES_PATH = "/repositories/discovery/branches"
 REPOSITORY_DISCOVERY_MANIFESTS_PATH = "/repositories/discovery/manifests"
 REPOSITORY_DISCOVERY_VALIDATE_PATH = "/repositories/discovery/validate"
-REPOSITORY_CONNECTION_STATUS_PATH = "/repositories/connection-status"
-REPOSITORY_DISCONNECT_PATH = "/repositories/disconnect"
-REPOSITORIES_PATH = "/repositories"
-RELEASE_PLANS_PATH = "/release-plans"
-RELEASE_READINESS_PATH = "/release-readiness"
-RELEASE_MANIFEST_RENDER_PATH = "/release-plans/render-manifest"
-RELEASE_MANIFEST_SAFE_PR_PATH = "/release-plans/render-manifest/safe-pr"
-RELEASE_PLAN_DISPATCH_PATH = "/release-plans/dispatch"
-RELEASE_PLAN_PREVIEW_PATH = "/release-plans/preview"
-RELEASE_PLAN_START_PATH = "/release-plans/start"
-RELEASE_PLAN_ARCHIVE_PATH = "/release-plans/{plan_id}/archive"
-RELEASE_PLAN_RESTORE_PATH = "/release-plans/{plan_id}/restore"
-RELEASE_PLAN_PATH = "/release-plans/{plan_id}"
-RELEASE_RUNS_PATH = "/release-runs"
-RELEASE_RUN_PATH = "/release-runs/{run_id}"
-RELEASE_RUN_SUMMARY_PATH = "/release-runs/summary"
-RELEASE_RUN_HANDOFF_PATH = "/release-runs/{run_id}/handoff"
-RELEASE_RUN_REPORT_PATH = "/release-runs/{run_id}/report"
-RELEASE_RUN_REPORT_EXPORT_PATH = "/release-runs/{run_id}/report/export"
-RELEASE_RUN_ADVANCE_PATH = "/release-runs/{run_id}/advance"
-RELEASE_RUN_CANCEL_PATH = "/release-runs/{run_id}/cancel"
-RELEASE_RUN_PAUSE_PATH = "/release-runs/{run_id}/pause"
-RELEASE_RUN_RESUME_PATH = "/release-runs/{run_id}/resume"
-RELEASE_RUN_RETRY_PATH = "/release-runs/{run_id}/retry"
-RELEASE_RUN_ROLLBACK_PATH = "/release-runs/{run_id}/rollback"
-RELEASE_RUN_NOTIFY_PATH = "/release-runs/{run_id}/notify"
-RELEASE_AUDIT_PATH = "/release-audit"
-RELEASE_AUDIT_EXPORT_PATH = "/release-audit/export"
-CATALOG_ITEMS_PATH = "/catalog/items"
-CATALOG_ITEM_PATH = "/catalog/items/{item_id}"
-CATALOG_ITEM_INSTALLS_PATH = "/catalog/items/{item_id}/installs"
-AGENT_COMMAND_POLL_PATH = "/agent/commands/poll"
-AGENT_COMMAND_START_PATH = "/agent/commands/{command_id}/start"
-AGENT_COMMAND_HEARTBEAT_PATH = "/agent/commands/{command_id}/heartbeat"
-AGENT_COMMAND_RESULT_PATH = "/agent/commands/{command_id}/result"
 AGENT_EVIDENCE_JOB_SCHEDULE_PATH = "/agent/evidence/jobs"
 AGENT_EVIDENCE_JOB_POLL_PATH = "/agent/evidence/jobs/poll"
 AGENT_EVIDENCE_JOB_RESULT_PATH = "/agent/evidence/jobs/{job_id}/result"
-AGENT_INVENTORY_SNAPSHOTS_PATH = "/agent/inventory/snapshots"
-AGENT_POLICY_PATH = "/agent/policy"
-AGENT_POLICY_STATUS_PATH = "/agent/policy/status"
-AGENT_RECONCILE_STATUS_PATH = "/agent/reconcile/status"
-AGENT_DEBUG_QUERY_PATH = "/agent/debug/query"
-CLUSTERS_PATH = "/clusters"
-CLUSTERS_CONNECT_PATH = "/clusters/connect"
-CLUSTER_PATH = "/clusters/{cluster_id}"
-CLUSTER_CONNECT_COMMAND_PATH = "/clusters/{cluster_id}/connect-command"
-# 콘솔 fleet 화면용 집계 — 워크스페이스 전체 클러스터 health/사용량 롤업(세션 범위).
-FLEET_SUMMARY_PATH = "/fleet/summary"
-# 콘솔 홈용 단일 workspace SSE — 권한으로 허용된 fleet 전체 payload를 직접 전송.
-FLEET_SUMMARY_EVENTS_PATH = "/fleet/events"
-# 클러스터 타일 클릭 드릴다운 — 워크로드 health 그룹/경고 이벤트/열린 인시던트/usage 스냅샷.
-CLUSTER_SUMMARY_PATH = "/clusters/{cluster_id}/summary"
-CLUSTER_HOME_EVENTS_PATH = "/clusters/{cluster_id}/home/events"
-CLUSTER_CONNECTION_STATUS_PATH = "/clusters/{cluster_id}/connection-status"
-CLUSTER_CONNECTION_PATH = "/clusters/{cluster_id}/connection"
-CLUSTER_NODES_SUMMARY_PATH = "/clusters/{cluster_id}/nodes/summary"
-CLUSTER_NODE_ALIASES_PATH = "/clusters/{cluster_id}/nodes/aliases"
-CLUSTER_NODE_ALIAS_PATH = "/clusters/{cluster_id}/nodes/{node_name}/alias"
-CLUSTER_NODE_PODS_SUMMARY_PATH = "/clusters/{cluster_id}/nodes/{node_name}/pods/summary"
-CLUSTER_INVENTORY_RESOURCES_PATH = "/clusters/{cluster_id}/inventory/resources"
-CLUSTER_INVENTORY_RESOURCE_DETAIL_PATH = "/clusters/{cluster_id}/inventory/resource-detail"
-CLUSTER_INVENTORY_SUMMARY_PATH = "/clusters/{cluster_id}/inventory/summary"
-CLUSTER_CONFIG_REFERENCES_PATH = "/clusters/{cluster_id}/config-references"
-CLUSTER_API_RESOURCES_PATH = "/clusters/{cluster_id}/api-resources"
-CLUSTER_INVENTORY_WORKLOADS_PATH = "/clusters/{cluster_id}/inventory/workloads"
-CLUSTER_INVENTORY_SERVICES_PATH = "/clusters/{cluster_id}/inventory/services"
-CLUSTER_INVENTORY_EVENTS_PATH = "/clusters/{cluster_id}/inventory/events"
-# 워크스페이스 범위 Resources 필터 계약 — 기존 단일 클러스터 인벤토리 경로와 분리한다.
-RESOURCES_FILTER_FACETS_PATH = "/resources/filter-facets"
-FILTERED_RESOURCES_PATH = "/resources"
-RESOURCE_LABEL_FACETS_PATH = "/resources/label-facets"
-FILTER_FACETS_PATH = "/filter-facets"
-RESOURCE_SEARCH_PATH = "/search"
-# Exact Kubernetes RBAC reverse projections. Cluster identity remains an explicit
-# query parameter because product sessions are workspace scoped, not kubeconfig scoped.
-RBAC_SUBJECT_NAMESPACED_PATH = "/rbac/subject/{kind}/{namespace}/{name}"
-RBAC_SUBJECT_GLOBAL_PATH = "/rbac/subject/{kind}/{name}"
-RBAC_ROLE_PATH = "/rbac/role/{kind}/{namespace}/{name}"
-RBAC_NAMESPACE_PATH = "/rbac/namespace/{namespace}"
-CLUSTER_NAMESPACE_SCOPE_PATH = "/cluster/namespace-scope"
-CLUSTER_NAMESPACE_PATH = "/cluster/namespace"
-SETTINGS_PATH = "/settings"
-SETTINGS_ACCESS_PATH = "/settings/access"
-RESOURCES_GRAPH_PATH = "/resources/graph"
-TOPOLOGY_PATH = "/topology"
-# Resources time scrubber: actual observed changes plus explicit collection gaps.
-# Retained, immutable product Timeline history.  Snapshot is NDJSON so a
-# browser/desktop adapter can use the same frame parser as resumable SSE.
-# Resources 표의 여러 pod 추세를 한 번에 읽는다. 단건 BQ-065를 클라이언트에서
-# fan-out하지 않도록 서버 batch 경계를 별도로 둔다.
-RESOURCE_METRICS_HISTORY_PATH = "/metrics/history"
-# Typed product metric reads resolve a server-owned subject and PromQL plan,
-# then reuse the existing audited target-agent query command path.
-SCOPED_RESOURCE_METRICS_QUERY_PATH = "/metrics/query"
-# 단일 inventory resource의 실행 가능 액션만 반환한다. 거부/미지원 액션을
-# disabled 항목으로 노출하지 않는 BQ-061 capability 경계다.
-RESOURCE_CAPABILITIES_PATH = "/capabilities"
-RESOURCE_DELETE_PATH = "/resource-deletions/{resource_id}"
-RESOURCE_DELETE_PREVIEW_PATH = "/resource-deletions/{resource_id}/cascade-preview"
-# Exact core/v1 Service capabilities and one bounded, audited in-cluster GET.
-SERVICE_ACCESS_CAPABILITIES_PATH = "/service-access/capabilities"
-SERVICE_REQUESTS_PATH = "/service-access/requests"
-# GitOps manifest editor. The selected live inventory resource is resolved to an
-# exact application/deployment binding; writes are emitted only as Safe PR events.
-RESOURCE_MANIFEST_SOURCE_PATH = "/resource-manifests/{resource_id}"
-RESOURCE_MANIFEST_PREVIEW_PATH = "/resource-manifests/{resource_id}/preview"
-RESOURCE_MANIFEST_APPROVE_PATH = "/resource-manifests/{resource_id}/approve"
-RESOURCE_MANIFEST_APPLY_PATH = "/resource-manifests/{resource_id}/apply"
-RESOURCE_MANIFEST_CREATE_CAPABILITY_PATH = "/resource-manifests/create/capability"
-RESOURCE_MANIFEST_CREATE_DRY_RUN_PATH = "/resource-manifests/create/dry-run"
-RESOURCE_MANIFEST_CREATE_PATH = "/resource-manifests/create"
-# 워크스페이스 범위 Issues 필터 계약 — mutable RCA timeline projection의 완전성을 명시한다.
-# 스냅샷 기반 실측 활용 시계열(usage rollup) — 콘솔 추이 차트용.
-CLUSTER_USAGE_PATH = "/clusters/{cluster_id}/usage"
-CLUSTER_METRIC_QUERY_PRESETS_PATH = "/clusters/{cluster_id}/metric-query-presets"
-CLUSTER_METRIC_QUERY_PRESET_PATH = "/clusters/{cluster_id}/metric-query-presets/{preset_id}"
-CLUSTER_METRIC_QUERY_PRESET_RUN_PATH = "/clusters/{cluster_id}/metric-query-presets/{preset_id}/run"
-CLUSTER_METRIC_WIDGETS_PATH = "/clusters/{cluster_id}/metric-widgets"
-CLUSTER_METRIC_WIDGET_PATH = "/clusters/{cluster_id}/metric-widgets/{widget_id}"
-METRICS_VALIDATE_PATH = "/metrics/validate"
-CLUSTER_DEPLOYMENT_SCALE_PATH = (
-    "/clusters/{cluster_id}/namespaces/{namespace}/deployments/{deployment}/scale"
-)
-CLUSTER_WORKLOAD_SCALE_PATH = (
-    "/clusters/{cluster_id}/namespaces/{namespace}/workloads/{kind}/{workload}/scale"
-)
-CLUSTER_WORKLOAD_RESTART_PATH = (
-    "/clusters/{cluster_id}/namespaces/{namespace}/workloads/{kind}/{workload}/restart"
-)
-RESOURCE_WORKLOAD_ROLLBACK_PATH = "/resource-rollbacks/{resource_id}"
-CLUSTER_NODE_CORDON_PATH = "/clusters/{cluster_id}/nodes/{node}/cordon"
-CLUSTER_NODE_UNCORDON_PATH = "/clusters/{cluster_id}/nodes/{node}/uncordon"
-CLUSTER_NODE_DRAIN_PATH = "/clusters/{cluster_id}/nodes/{node}/drain"
-CLUSTER_POD_DEBUG_PATH = "/clusters/{cluster_id}/namespaces/{namespace}/pods/{pod}/debug"
-CLUSTER_NODE_DEBUG_PATH = "/clusters/{cluster_id}/nodes/{node}/debug"
-CLUSTER_NODE_DEBUG_CLEANUP_PATH = "/clusters/{cluster_id}/nodes/{node}/debug/cleanup"
-CLUSTER_CRONJOB_TRIGGER_PATH = (
-    "/clusters/{cluster_id}/namespaces/{namespace}/cronjobs/{cronjob}/trigger"
-)
-CLUSTER_CRONJOB_SUSPEND_PATH = (
-    "/clusters/{cluster_id}/namespaces/{namespace}/cronjobs/{cronjob}/suspend"
-)
-CLUSTER_CRONJOB_RESUME_PATH = (
-    "/clusters/{cluster_id}/namespaces/{namespace}/cronjobs/{cronjob}/resume"
-)
-CLUSTER_DEPLOYMENT_RESTART_PATH = (
-    "/clusters/{cluster_id}/namespaces/{namespace}/deployments/{deployment}/restart"
-)
-CLUSTER_POLICY_PATH = "/clusters/{cluster_id}/policy"
-CLUSTER_SCHEDULING_PROFILES_PATH = "/clusters/{cluster_id}/scheduling-profiles"
-PROVIDERS_CATALOG_PATH = "/providers/catalog"
-PROVIDERS_CLUSTER_DISCOVERY_PATH = "/providers/cluster-discovery"
-PROVIDERS_VALIDATE_PATH = "/providers/validate"
-TARGETS_PREFLIGHT_PATH = "/targets/preflight"
-DASHBOARD_RCA_TIMELINE_PATH = "/dashboard/rca/timeline"
-DASHBOARD_RCA_INCIDENT_PATH = "/dashboard/rca/incidents/{incident_id}"
-AUDIT_TIMELINE_PATH = "/audit/timeline"
-# 범용 조회 API — 세션 워크스페이스 범위의 evidence/RCA report 목록(read-only)
 EVIDENCE_QUERY_PATH = "/evidence"
 EVIDENCE_WINDOWS_PATH = "/evidence/windows"
 EVIDENCE_WINDOW_PATH = "/evidence/windows/{evidence_key}"
@@ -208,21 +49,7 @@ RCA_RECOVERY_ACTION_SELECT_BY_CORRELATION_PATH = (
     "/rca/recovery-plans/by-correlation/{correlation_id}/actions/select"
 )
 RCA_RECOVERY_ACTION_SELECT_PATH = "/rca/recovery-plans/{plan_id}/actions/{action_id}/select"
-RCA_RECOVERY_RETRY_BY_CORRELATION_PATH = (
-    "/rca/recovery-plans/by-correlation/{correlation_id}/retry"
-)
-
-
-def agent_command_result_path(command_id: str) -> str:
-    return AGENT_COMMAND_RESULT_PATH.format(command_id=command_id)
-
-
-def agent_command_start_path(command_id: str) -> str:
-    return AGENT_COMMAND_START_PATH.format(command_id=command_id)
-
-
-def agent_command_heartbeat_path(command_id: str) -> str:
-    return AGENT_COMMAND_HEARTBEAT_PATH.format(command_id=command_id)
+RCA_RECOVERY_RETRY_BY_CORRELATION_PATH = "/rca/recovery-plans/by-correlation/{correlation_id}/retry"
 
 
 def agent_evidence_job_result_path(job_id: str) -> str:
