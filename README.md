@@ -101,10 +101,7 @@ make doctor
 
 정리 완료 커밋 기준으로 다음 검증을 통과했다.
 
-- Backend: `236 passed`
-- ImagePullBackOff/RCA: `43 passed`
-- base-SHA-pinned Draft PR: `29 passed`
-- post-deploy verification: `27 passed`
+- Backend: `214 passed`
 - Frontend typecheck, ESLint, Vitest와 production build
 - Helm lint/template와 read-only RBAC 검사
 - in-process/NATS 이벤트 의미 동등성

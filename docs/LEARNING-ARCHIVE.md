@@ -92,7 +92,7 @@ src/services/ai/rca-worker/app.py
 
 ```bash
 uv run pytest -q \
-  tests/test_incident_alert_event.py \
+  tests/test_golden_path_safety_contracts.py \
   tests/test_recovery_gitops_authority.py
 ```
 
