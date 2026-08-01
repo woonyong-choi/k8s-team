@@ -103,6 +103,13 @@ rules:
               - fact: "terminated_reason=OOMKilled"
               - fact: "exit_code=137"
               - log_pattern: "out of memory"
+          # 최근 배포 변경 근거가 함께 있어야 '릴리스 회귀'다.
+          # 이 신호가 없으면 memory_limit_too_low 와 판별 불가 (evals 혼동 사례).
+          - id: "recent_release_signal"
+            any_of:
+              - event_pattern: "scaling replica set"
+              - event_pattern: "rollout"
+              - fact: "event_reason=ScalingReplicaSet"
 
   - id: "cpu_saturation"
     symptoms: ["CPU Saturation"]
@@ -152,7 +159,6 @@ rules:
           - id: "disk_pressure_signal"
             any_of:
               - event_pattern: "diskpressure"
-              - event_pattern: "ephemeral-storage"
               - event_pattern: "evicted"
               - log_pattern: "no space left"
       - candidate_id: "ephemeral_storage_exhausted"

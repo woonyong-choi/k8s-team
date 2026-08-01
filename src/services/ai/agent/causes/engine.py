@@ -323,9 +323,15 @@ def analyze_root_cause(evaluations: list[CauseEvaluation]) -> RcaReportDetail:
     if not supported:
         return insufficient_evidence_root_cause(evaluations)
 
+    # 점수 동률이면 판별 신호를 더 많이 충족한(더 구체적인) 후보를 고른다.
+    # 좁은 신호가 넓은 신호의 부분 문자열일 때 선언 순서로 승패가 갈리던 문제의 방어선.
     selected = min(
         supported,
-        key=lambda evaluation: (-evaluation.score, len(evaluation.missing_evidence)),
+        key=lambda evaluation: (
+            -evaluation.score,
+            -evaluation.matched_signal_count,
+            len(evaluation.missing_evidence),
+        ),
     )
     return RcaReportDetail(
         root_cause=selected.candidate_id,

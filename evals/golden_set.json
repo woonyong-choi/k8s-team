@@ -6234,7 +6234,12 @@
                 ]
               }
             ],
-            "events": []
+            "events": [
+              {
+                "reason": "",
+                "message": "scaling replica set"
+              }
+            ]
           },
           "summary": "synthetic kubernetes:cluster_resource_state evidence",
           "evidence_ref": "eval://kubernetes/cluster_resource_state",
@@ -7780,7 +7785,7 @@
             "events": [
               {
                 "reason": "",
-                "message": "secret"
+                "message": "secret \""
               }
             ]
           },

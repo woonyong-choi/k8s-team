@@ -20,7 +20,7 @@ rules:
         signals:
           - id: "missing_secret_reference_signal"
             any_of:
-              - event_pattern: "secret"
+              - event_pattern: 'secret "'
               - event_pattern: "not found"
               - event_pattern: "CreateContainerConfigError"
               - log_pattern: "secret not found"

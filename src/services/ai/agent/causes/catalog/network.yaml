@@ -142,7 +142,9 @@ rules:
           - id: "upstream_failure_signal"
             any_of:
               - log_pattern: "no endpoints"
-              - log_pattern: "upstream"
+              - log_pattern: "no healthy upstream"
+              - log_pattern: "upstream connect error"
+              - log_pattern: "upstream timed out"
               - log_pattern: "connection refused"
               - event_pattern: "no endpoints"
       - candidate_id: "backend_readiness_failure"

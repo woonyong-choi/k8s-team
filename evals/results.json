@@ -6,9 +6,9 @@
     "healthy_scenarios": 29
   },
   "accuracy": {
-    "correct": 82,
+    "correct": 87,
     "total": 87,
-    "pct": 94.3
+    "pct": 100.0
   },
   "coverage": {
     "covered": 116,
@@ -20,66 +20,9 @@
     "total": 29,
     "pct": 0.0
   },
-  "confusion_pairs": [
-    {
-      "golden": "application_5xx_spike",
-      "predicted": "upstream_unavailable",
-      "count": 1
-    },
-    {
-      "golden": "bad_release_memory_regression",
-      "predicted": "memory_limit_too_low",
-      "count": 1
-    },
-    {
-      "golden": "ephemeral_storage_exhausted",
-      "predicted": "node_disk_pressure",
-      "count": 1
-    },
-    {
-      "golden": "untolerated_taint",
-      "predicted": "node_affinity_or_taint_mismatch",
-      "count": 1
-    },
-    {
-      "golden": "external_secret_sync_failed",
-      "predicted": "missing_secret_reference",
-      "count": 1
-    }
-  ],
+  "confusion_pairs": [],
   "false_positive_cases": [],
-  "confusion_cases": [
-    {
-      "scenario_id": "pos-ingress_5xx-application_5xx_spike",
-      "golden": "application_5xx_spike",
-      "predicted": "upstream_unavailable",
-      "confidence": 1.0
-    },
-    {
-      "scenario_id": "pos-oom_memory_pressure-bad_release_memory_regression",
-      "golden": "bad_release_memory_regression",
-      "predicted": "memory_limit_too_low",
-      "confidence": 1.0
-    },
-    {
-      "scenario_id": "pos-node_disk_pressure-ephemeral_storage_exhausted",
-      "golden": "ephemeral_storage_exhausted",
-      "predicted": "node_disk_pressure",
-      "confidence": 1.0
-    },
-    {
-      "scenario_id": "pos-failed_scheduling-untolerated_taint",
-      "golden": "untolerated_taint",
-      "predicted": "node_affinity_or_taint_mismatch",
-      "confidence": 1.0
-    },
-    {
-      "scenario_id": "pos-secret_not_found-external_secret_sync_failed",
-      "golden": "external_secret_sync_failed",
-      "predicted": "missing_secret_reference",
-      "confidence": 1.0
-    }
-  ],
+  "confusion_cases": [],
   "rows": [
     {
       "scenario_id": "pos-hpa_scaling_failed-metrics_server_unavailable",
@@ -627,7 +570,7 @@
       "golden": "application_5xx_spike",
       "planned_candidates": 3,
       "rule_missing": false,
-      "predicted_root_cause": "upstream_unavailable",
+      "predicted_root_cause": "application_5xx_spike",
       "confidence": 1.0,
       "missing_evidence_count": 0
     },
@@ -1001,7 +944,7 @@
       "golden": "bad_release_memory_regression",
       "planned_candidates": 5,
       "rule_missing": false,
-      "predicted_root_cause": "memory_limit_too_low",
+      "predicted_root_cause": "bad_release_memory_regression",
       "confidence": 1.0,
       "missing_evidence_count": 0
     },
@@ -1014,7 +957,7 @@
       "rule_missing": false,
       "predicted_root_cause": "insufficient_evidence",
       "confidence": 0.0,
-      "missing_evidence_count": 5
+      "missing_evidence_count": 6
     },
     {
       "scenario_id": "pos-cpu_saturation-cpu_limit_or_throttling",
@@ -1056,7 +999,7 @@
       "golden": "ephemeral_storage_exhausted",
       "planned_candidates": 2,
       "rule_missing": false,
-      "predicted_root_cause": "node_disk_pressure",
+      "predicted_root_cause": "ephemeral_storage_exhausted",
       "confidence": 1.0,
       "missing_evidence_count": 0
     },
@@ -1199,7 +1142,7 @@
       "golden": "untolerated_taint",
       "planned_candidates": 6,
       "rule_missing": false,
-      "predicted_root_cause": "node_affinity_or_taint_mismatch",
+      "predicted_root_cause": "untolerated_taint",
       "confidence": 1.0,
       "missing_evidence_count": 0
     },
@@ -1254,7 +1197,7 @@
       "golden": "external_secret_sync_failed",
       "planned_candidates": 3,
       "rule_missing": false,
-      "predicted_root_cause": "missing_secret_reference",
+      "predicted_root_cause": "external_secret_sync_failed",
       "confidence": 1.0,
       "missing_evidence_count": 0
     },

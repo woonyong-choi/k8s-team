@@ -46,7 +46,6 @@ rules:
           - id: "affinity_or_taint_event"
             any_of:
               - event_pattern: "affinity"
-              - event_pattern: "taint"
               - event_pattern: "didn't match"
       - candidate_id: "node_selector_mismatch"
         title: "nodeSelector 불일치"
