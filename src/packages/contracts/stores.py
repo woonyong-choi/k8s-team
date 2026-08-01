@@ -1,16 +1,10 @@
-"""워커가 ctx.db 로 보는 능력별 store(async). 서비스는 자기 store 만 봄.
-
-ctx.db 는 AsyncDb 로 감싸져 모든 메서드가 async → 여기 메서드도 async.
-핸들러가 `ctx: EventContext[RcaStore]` 로 받으면 IDE·타입체커가 그 store 의
-메서드만 노출한다(다른 서비스 DB 능력은 안 보임).
-"""
+"""Worker-facing store protocols used by mounted services."""
 
 from __future__ import annotations
 
 from typing import Protocol
 
-from packages.contracts.event_bus.interfaces import EventEnvelope, JsonObject
-from packages.contracts.gitops import WorkflowMutation
+from packages.contracts.event_bus.interfaces import JsonObject
 from packages.contracts.timeline import TimelineEvent
 
 
@@ -222,163 +216,6 @@ class RecoveryPlanStore(Protocol):
     async def get_workflow_run(self, workflow_run_id: str) -> JsonObject | None: ...
 
 
-class RepoChangeStore(Protocol):
-    async def save_repo_change(
-        self,
-        correlation_id: str,
-        commit_sha: str,
-        manifest: JsonObject,
-        workspace_id: str = "default",
-        repository_id: str | None = None,
-        watch_target_id: str | None = None,
-        binding_id: str | None = None,
-        manifest_path: str | None = None,
-    ) -> None: ...
-
-    async def record_manifest_artifact(self, payload: JsonObject) -> JsonObject: ...
-
-    async def find_rendered_manifest_artifacts(
-        self,
-        workspace_id: str,
-        binding_id: str,
-        commit_sha: str,
-        manifest_path: str,
-        renderer_version: str,
-    ) -> list[JsonObject]: ...
-
-    async def get_last_approved_resource_snapshot(
-        self,
-        workspace_id: str,
-        binding_id: str,
-        cluster_id: str,
-        namespace: str,
-        resource: str,
-    ) -> JsonObject | None: ...
-
-
-class ReleaseFlowStore(Protocol):
-    async def project_release_workflow_event(self, payload: JsonObject) -> JsonObject | None: ...
-
-    async def queue_evidence_jobs(self, **payload: object) -> JsonObject: ...
-
-
-class RcaChangesStore(Protocol):
-    async def get_completed_workload_resource_diff(
-        self,
-        workspace_id: str,
-        workflow_run_id: str,
-        binding_id: str,
-        cluster_id: str,
-        namespace: str,
-        resource_kind: str,
-        resource_name: str,
-    ) -> JsonObject | None: ...
-
-    async def list_recent_completed_workload_resource_diffs(
-        self,
-        workspace_id: str,
-        binding_id: str,
-        cluster_id: str,
-        namespace: str,
-        resource_kind: str,
-        resource_name: str,
-        *,
-        limit: int = 20,
-    ) -> list[JsonObject]: ...
-
-    async def get_completed_workload_change_contexts(
-        self,
-        workspace_id: str,
-        workflow_run_id: str,
-        application_id: str,
-        binding_id: str,
-    ) -> list[JsonObject]: ...
-
-    async def get_completed_workload_change_context(
-        self,
-        workspace_id: str,
-        workflow_run_id: str,
-        application_id: str,
-        binding_id: str,
-    ) -> JsonObject | None: ...
-
-    async def get_workflow_pr_identity_context(
-        self,
-        workspace_id: str,
-        workflow_run_id: str,
-        application_id: str,
-        binding_id: str,
-    ) -> JsonObject | None: ...
-
-    async def record_workload_change(self, row: JsonObject) -> None: ...
-
-    async def record_workflow_pr_reference(self, row: JsonObject) -> None: ...
-
-
-class WorkflowStore(Protocol):
-    async def get_cluster_registration(
-        self, workspace_id: str, cluster_id: str
-    ) -> JsonObject | None: ...
-
-    async def get_application(
-        self, workspace_id: str, application_id: str
-    ) -> JsonObject | None: ...
-
-    async def get_deployment_binding(
-        self, workspace_id: str, binding_id: str
-    ) -> JsonObject | None: ...
-
-    async def get_workflow_run(self, workflow_run_id: str) -> JsonObject | None: ...
-
-    async def get_recovery_plan_for_workflow(
-        self,
-        workspace_id: str,
-        workflow_run_id: str,
-        binding_id: str,
-        application_id: str,
-    ) -> JsonObject | None: ...
-
-    async def upsert_application(self, payload: JsonObject) -> JsonObject: ...
-
-    async def start_workflow_run(self, payload: JsonObject) -> WorkflowMutation: ...
-
-    async def update_workflow_run(self, payload: JsonObject) -> WorkflowMutation: ...
-
-    async def record_workflow_step(self, payload: JsonObject) -> WorkflowMutation: ...
-
-    async def request_workflow_approval(self, payload: JsonObject) -> JsonObject: ...
-
-    async def resolve_workflow_approval(self, payload: JsonObject) -> JsonObject: ...
-
-    async def resolve_workflow_approval_if_open(
-        self,
-        approval_id: str,
-        workspace_id: str,
-        status: str,
-        decided_by: str | None,
-        decision: str | None,
-        details: JsonObject,
-    ) -> bool: ...
-
-    async def attach_workflow_command(self, workflow_run_id: str, command_id: str) -> None: ...
-
-    async def get_workflow_command_progress(self, workflow_run_id: str) -> JsonObject: ...
-
-    async def record_approved_workflow_snapshots(self, workflow_run_id: str) -> int: ...
-
-    async def update_workflow_run_for_command(self, payload: JsonObject) -> WorkflowMutation: ...
-
-    async def append_timeline_event(self, event: TimelineEvent) -> object: ...
-
-    async def get_workflow_identity_for_command(self, command_id: str) -> JsonObject | None: ...
-
-
-class PolicyDecisionStore(Protocol):
-    async def request_workflow_approval(self, payload: JsonObject) -> JsonObject: ...
-
-    async def resolve_workflow_approval(self, payload: JsonObject) -> JsonObject: ...
-
-
 class PullRequestStore(Protocol):
     async def get_workflow_approval(
         self,
@@ -400,31 +237,3 @@ class PullRequestStore(Protocol):
     async def save_pull_request(
         self, correlation_id: str, pr_url: str, title: str, body: str, status: str
     ) -> None: ...
-
-
-class AgentCommandStore(Protocol):
-    async def get_workflow_approval(
-        self, approval_id: str, workspace_id: str = "default"
-    ) -> JsonObject | None: ...
-
-    async def queue_agent_command(
-        self, correlation_id: str, plan: JsonObject, status: str
-    ) -> bool: ...
-
-    async def fail_expired_agent_commands(
-        self, *, queue_ttl_seconds: int = 1800
-    ) -> list[JsonObject]: ...
-
-
-class TargetReconcileStore(Protocol):
-    async def list_target_desired_states(
-        self, workspace_id: str, cluster_id: str
-    ) -> list[JsonObject]: ...
-
-    async def record_target_reconcile_result(self, payload: JsonObject) -> JsonObject: ...
-
-
-class AuditStore(Protocol):
-    async def append_audit_log(self, evt: EventEnvelope) -> None: ...
-
-    async def append_audit_logs(self, rows: list[JsonObject]) -> None: ...
