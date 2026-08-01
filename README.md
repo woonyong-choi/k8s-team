@@ -101,7 +101,7 @@ make doctor
 
 정리 완료 커밋 기준으로 다음 검증을 통과했다.
 
-- Backend: `236 passed, 1 skipped`
+- Backend: `236 passed`
 - ImagePullBackOff/RCA: `43 passed`
 - base-SHA-pinned Draft PR: `29 passed`
 - post-deploy verification: `27 passed`
