@@ -45,4 +45,4 @@ WebSocket gateway와 대형 dashboard route는 없습니다.
 
 `domains.command`의 models/events/repository/lifecycle는 기존 migration과 과거 workflow 참조를 읽기 위해 남아 있습니다. router, handler, action catalog, worker, agent executor는 제거됐고 저장소의 cancel/retry 해석도 항상 거부하도록 고정했습니다.
 
-`domains.dashboard`의 timeline model/repository는 RCA와 change correlation이 같은 테이블을 사용하므로 남아 있습니다. dashboard HTTP route, projection worker, frontend는 제거됐습니다.
+`domains.dashboard`에는 RCA와 change correlation이 함께 읽는 `RcaTimeline` 영속 모델만 남아 있습니다. dashboard repository, ready stream, HTTP route, projection worker, frontend는 제거됐습니다.
