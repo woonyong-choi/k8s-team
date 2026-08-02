@@ -1,5 +1,20 @@
 # Kubernetes 장애 증거 기반 GitOps 변경 제안 도구
 
+## 한눈에
+
+| 구분 | 내용 |
+|---|---|
+| 무엇 | Kubernetes 장애 증거를 보존하고, 규칙으로 원인을 판정한 뒤, 허용된 변경만 GitHub Draft PR 로 제안하는 GitOps 도구 |
+| 왜 | 자동화가 클러스터를 직접 바꾸지 못하게 막으면서 관측, 판정, 변경, 사후 검증을 하나의 사건 ID 로 잇기 위해 |
+| 내 몫 | 5인 팀의 팀장. 전체 아키텍처, 장애 파이프라인, 서비스 간 인터페이스 설계. 종료 후 Golden Path 축소와 안전 계약 감사 |
+| 스택 | Python 3.13 · NATS · PostgreSQL(Alembic) · Kubernetes/Helm · TypeScript 프론트엔드 |
+| 검증된 사실 | backend 203 passed, frontend typecheck/lint/vitest/build, Helm lint, 이벤트 의미 동등성. `make demo` 로 재현 (아래 "검증 결과") |
+| 한계 | 실사용 트래픽 없음. 외부 클러스터 E2E 미수행. 완결 시나리오는 ImagePullBackOff 1개 |
+
+**같은 사람의 다른 저장소** · 이력서 허브: <https://woonyong-kr.github.io>
+[Kyro(k8s-ops)](https://github.com/woonyong-kr/k8s-ops) · [MiniDB](https://github.com/woonyong-kr/minidb) · [PintOS](https://github.com/woonyong-kr/pintos) · [dx_framework](https://github.com/woonyong-kr/dx_framework) · [dx_content_interface](https://github.com/woonyong-kr/dx_content_interface)
+
+
 Kubernetes 장애 당시의 증거를 보존하고, 규칙으로 원인을 판정한 뒤 허용된 manifest 변경만 GitHub Draft PR로 제안하고 배포 이후 상태를 다시 검증한다.
 
 ## 해결하는 문제
