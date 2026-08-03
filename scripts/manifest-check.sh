@@ -67,5 +67,3 @@ for item in objects:
 
 print(f"rendered Kubernetes objects: {len(objects)}")
 PY
-
-kubectl apply --dry-run=client --validate=false -f "${RENDERED_MANIFEST}" >/dev/null

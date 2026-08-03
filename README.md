@@ -12,7 +12,7 @@
 | 한계 | 실사용 트래픽 없음. 외부 클러스터 E2E 미수행. 완결 시나리오는 ImagePullBackOff 1개 |
 
 **같은 사람의 다른 저장소** · 이력서 허브: <https://woonyong-kr.github.io>
-[Kyro(k8s-ops)](https://github.com/woonyong-kr/k8s-ops) · [MiniDB](https://github.com/woonyong-kr/minidb) · [PintOS](https://github.com/woonyong-kr/pintos) · [dx_framework](https://github.com/woonyong-kr/dx_framework) · [dx_content_interface](https://github.com/woonyong-kr/dx_content_interface)
+[Kyro(k8s-ops)](https://github.com/woonyong-kr/k8s-ops) · [MiniDB](https://github.com/woonyong-kr/minidb) · [PintOS](https://github.com/woonyong-kr/pintos) · [dx_framework](https://github.com/woonyong-kr/dx_framework)
 
 
 Kubernetes 장애 당시의 증거를 보존하고, 규칙으로 원인을 판정한 뒤 허용된 manifest 변경만 GitHub Draft PR로 제안하고 배포 이후 상태를 다시 검증한다.
