@@ -64,8 +64,8 @@ ImagePullBackOff
 - Helm
 
 ```bash
-git clone https://github.com/woonyong-kr/k8s-ops.git
-cd k8s-ops
+git clone https://github.com/woonyong-choi/k8s-team.git
+cd k8s-team
 uv sync --all-groups
 cd frontend
 npm ci
